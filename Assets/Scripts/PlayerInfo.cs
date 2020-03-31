@@ -1,0 +1,46 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerInfo : MonoBehaviour
+{
+
+    public static PlayerInfo PI;
+
+    public int mySelectedCharacter;
+
+    public string myNameTag;
+
+    public GameObject[] allCharacters;
+
+    private void OnEnable() {
+        if(PlayerInfo.PI == null) {
+            PlayerInfo.PI = this;
+        } else {
+            if(PlayerInfo.PI != this) {
+                Destroy(PlayerInfo.PI.gameObject);
+                PlayerInfo.PI = this;
+            }
+        }
+        DontDestroyOnLoad(this.gameObject);
+    }
+    // Start is called before the first frame update
+    void Start() {
+        if(PlayerPrefs.HasKey("MyCharacter")) {
+            mySelectedCharacter = PlayerPrefs.GetInt("MyCharacter");
+        } else {
+            mySelectedCharacter = 0;
+            PlayerPrefs.SetInt("MyCharacter", mySelectedCharacter);
+        }
+        if(PlayerPrefs.HasKey("NameTag")) {
+            myNameTag = PlayerPrefs.GetString("NameTag");
+        } else {
+            myNameTag = "";
+            PlayerPrefs.SetString("NameTag", myNameTag);
+        }
+    }
+
+    void Update() {
+        //Debug.Log(mySelectedCharacter);
+    }
+}
